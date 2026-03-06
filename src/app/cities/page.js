@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic';
 
-import { supabase } from '@/lib/supabase';
+import { getSupabase } from '@/lib/supabase';
 import { breadcrumbSchema } from '@/lib/schema';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import Link from 'next/link';
@@ -12,7 +12,7 @@ export const metadata = {
 };
 
 export default async function CitiesPage() {
-  const { data: listings } = await supabase
+  const { data: listings } = await getSupabase()
     .from('getapro_listings')
     .select('city, city_slug');
 

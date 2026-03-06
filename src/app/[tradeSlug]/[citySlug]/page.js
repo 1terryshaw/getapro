@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic';
 
-import { supabase } from '@/lib/supabase';
+import { getSupabase } from '@/lib/supabase';
 import { generateTradeCity } from '@/lib/seo';
 import { localBusinessSchema, breadcrumbSchema } from '@/lib/schema';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -40,7 +40,7 @@ export async function generateMetadata({ params }) {
   if (!tradeName) return {};
   const cityName = toCityName(citySlug);
 
-  const { count } = await supabase
+  const { count } = await getSupabase()
     .from('getapro_listings')
     .select('id', { count: 'exact', head: true })
     .eq('trade_category', tradeName)
@@ -57,7 +57,7 @@ export default async function TradeCityPage({ params, searchParams }) {
   const cityName = toCityName(citySlug);
 
   const sortParam = resolvedSearchParams?.sort || 'rating';
-  let query = supabase
+  let query = getSupabase()
     .from('getapro_listings')
     .select('*')
     .eq('trade_category', tradeName)
@@ -75,7 +75,7 @@ export default async function TradeCityPage({ params, searchParams }) {
   const count = listings?.length || 0;
 
   // Cross-links: other trades in same city
-  const { data: otherTrades } = await supabase
+  const { data: otherTrades } = await getSupabase()
     .from('getapro_listings')
     .select('trade_category')
     .eq('city_slug', citySlug)

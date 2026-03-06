@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+import { getSupabase } from '@/lib/supabase';
 import Link from 'next/link';
 
 export const metadata = {
@@ -13,7 +13,7 @@ export default async function ClaimSuccessPage({ searchParams }) {
 
   let listing = null;
   if (listingId) {
-    const { data } = await supabase
+    const { data } = await getSupabase()
       .from('getapro_listings')
       .select('id, business_name, slug, trade_category, city')
       .eq('id', listingId)

@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic';
 
-import { supabase } from '@/lib/supabase';
+import { getSupabase } from '@/lib/supabase';
 import { generateProfile } from '@/lib/seo';
 import { localBusinessSchema, breadcrumbSchema } from '@/lib/schema';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -28,7 +28,7 @@ const TRADE_SLUGS = {
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const { data: listing } = await supabase
+  const { data: listing } = await getSupabase()
     .from('getapro_listings')
     .select('business_name, trade_category, city')
     .eq('slug', slug)
@@ -40,7 +40,7 @@ export async function generateMetadata({ params }) {
 
 export default async function ProProfilePage({ params }) {
   const { slug } = await params;
-  const { data: listing } = await supabase
+  const { data: listing } = await getSupabase()
     .from('getapro_listings')
     .select('*')
     .eq('slug', slug)

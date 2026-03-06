@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic';
 
-import { supabase } from '@/lib/supabase';
+import { getSupabase } from '@/lib/supabase';
 import { generateTrade } from '@/lib/seo';
 import { breadcrumbSchema } from '@/lib/schema';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -39,7 +39,7 @@ export default async function TradePage({ params }) {
   if (!tradeName) notFound();
 
   // Fetch cities with listing counts for this trade
-  const { data: listings } = await supabase
+  const { data: listings } = await getSupabase()
     .from('getapro_listings')
     .select('city, city_slug')
     .eq('trade_category', tradeName);
@@ -54,7 +54,7 @@ export default async function TradePage({ params }) {
   const cities = Object.values(cityCountMap).sort((a, b) => b.count - a.count);
 
   // Fetch top-rated listings across Ontario
-  const { data: topListings } = await supabase
+  const { data: topListings } = await getSupabase()
     .from('getapro_listings')
     .select('*')
     .eq('trade_category', tradeName)
