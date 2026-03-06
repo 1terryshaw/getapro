@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+import { getSupabase } from '@/lib/supabase';
 import ClaimForm from '@/components/ClaimForm';
 import Link from 'next/link';
 
@@ -14,7 +14,7 @@ export default async function ClaimPage({ searchParams }) {
 
   let listing = null;
   if (listingId) {
-    const { data } = await supabase
+    const { data } = await getSupabase()
       .from('getapro_listings')
       .select('id, business_name, trade_category, city, is_claimed')
       .eq('id', listingId)

@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
+import { getSupabase } from '@/lib/supabase';
 import AdminLoginForm from '@/components/AdminLoginForm';
 
 export const metadata = {
@@ -16,17 +16,17 @@ async function isAuthenticated() {
 
 async function getDashboardData() {
   // Listings by trade
-  const { data: allListings } = await supabase
+  const { data: allListings } = await getSupabase()
     .from('getapro_listings')
     .select('trade_category, city, is_claimed, is_featured, is_mtb_client, lead_count');
 
   // Claims data from users table
-  const { data: allUsers } = await supabase
+  const { data: allUsers } = await getSupabase()
     .from('getapro_users')
     .select('id, email, business_name, claim_verified, created_at');
 
   // Inquiries
-  const { data: allInquiries } = await supabase
+  const { data: allInquiries } = await getSupabase()
     .from('getapro_inquiries')
     .select('id, listing_id, consumer_name, consumer_email, trade_category, city, status, created_at')
     .order('created_at', { ascending: false })
