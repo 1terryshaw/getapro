@@ -2,6 +2,7 @@ import { supabase } from '@/lib/supabase';
 import { generateProfile } from '@/lib/seo';
 import { localBusinessSchema, breadcrumbSchema } from '@/lib/schema';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import InquiryForm from '@/components/InquiryForm';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
@@ -217,28 +218,24 @@ export default async function ProProfilePage({ params }) {
               </div>
             </div>
 
-            {/* Get a Quote CTA */}
-            <div className="bg-primary rounded-lg p-6 text-white text-center">
-              <h3 className="text-lg font-bold mb-2">Get a Free Quote</h3>
-              <p className="text-sm opacity-90 mb-4">
-                Contact {listing.business_name} for a free estimate on your project.
-              </p>
-              {listing.phone ? (
+            {/* Inquiry Form */}
+            <InquiryForm listingId={listing.id} businessName={listing.business_name} />
+
+            {/* Call CTA */}
+            {listing.phone && (
+              <div className="bg-primary rounded-lg p-6 text-white text-center">
+                <h3 className="text-lg font-bold mb-2">Call Now</h3>
+                <p className="text-sm opacity-90 mb-3">
+                  Speak directly with {listing.business_name}
+                </p>
                 <a
                   href={`tel:${listing.phone}`}
                   className="inline-block bg-white text-primary px-6 py-2 rounded font-semibold hover:bg-light transition-colors w-full"
                 >
-                  Call Now
+                  {listing.phone}
                 </a>
-              ) : (
-                <Link
-                  href={`/claim/${listing.id}`}
-                  className="inline-block bg-white text-primary px-6 py-2 rounded font-semibold hover:bg-light transition-colors w-full"
-                >
-                  Request Quote
-                </Link>
-              )}
-            </div>
+              </div>
+            )}
 
             {/* MTB badge for MTB clients */}
             {listing.is_mtb_client && (
