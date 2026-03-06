@@ -10,6 +10,18 @@ export const metadata = {
   title: 'All Cities — Find Pros Across Ontario | GetAPro.org',
   description:
     'Browse all Ontario cities with trusted trade professionals. Find plumbers, electricians, HVAC techs, roofers, and more in your city.',
+  openGraph: {
+    siteName: 'GetAPro.org',
+    type: 'website',
+    locale: 'en_CA',
+    title: 'All Cities — Find Pros Across Ontario | GetAPro.org',
+    description: 'Browse all Ontario cities with trusted trade professionals. Find plumbers, electricians, HVAC techs, roofers, and more in your city.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'All Cities — Find Pros Across Ontario | GetAPro.org',
+    description: 'Browse all Ontario cities with trusted trade professionals. Find plumbers, electricians, HVAC techs, roofers, and more in your city.',
+  },
 };
 
 export default async function CitiesPage() {

@@ -1,46 +1,38 @@
 import './globals.css';
 import Link from 'next/link';
+import MobileNav from '@/components/MobileNav';
 
 export const metadata = {
   title: "GetAPro.org — Find Trusted Pros in Ontario",
   description: "Ontario's trusted directory for plumbers, electricians, HVAC techs, and more. Compare ratings, read reviews, and get free quotes.",
   icons: { icon: '/favicon.ico' },
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://getapro.org'),
+  openGraph: {
+    siteName: 'GetAPro.org',
+    type: 'website',
+    locale: 'en_CA',
+    title: 'GetAPro.org — Find Trusted Pros in Ontario',
+    description: "Ontario's trusted directory for plumbers, electricians, HVAC techs, and more. Compare ratings, read reviews, and get free quotes.",
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'GetAPro.org — Find Trusted Pros in Ontario',
+    description: "Ontario's trusted directory for plumbers, electricians, HVAC techs, and more. Compare ratings, read reviews, and get free quotes.",
+  },
 };
-
-const NAV_LINKS = [
-  { href: '/', label: 'Home' },
-  { href: '/cities', label: 'Cities' },
-  { href: '/about', label: 'About' },
-];
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="flex flex-col min-h-screen">
-        <header className="bg-dark text-white">
+        <header className="bg-dark text-white relative">
           <nav className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
             <Link href="/" className="text-2xl font-bold">
               <span className="text-primary">Get</span>
               <span className="text-white">A</span>
               <span className="text-primary">Pro</span>
             </Link>
-            <div className="flex items-center gap-6">
-              {NAV_LINKS.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="text-sm hover:text-primary transition-colors"
-                >
-                  {link.label}
-                </Link>
-              ))}
-              <Link
-                href="/claim"
-                className="bg-primary text-white px-4 py-2 rounded text-sm font-medium hover:bg-orange-600 transition-colors"
-              >
-                Claim Your Listing
-              </Link>
-            </div>
+            <MobileNav />
           </nav>
         </header>
 

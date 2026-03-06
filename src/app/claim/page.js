@@ -5,6 +5,18 @@ import Link from 'next/link';
 export const metadata = {
   title: 'Claim Your Listing — GetAPro.org',
   description: 'Claim your free business listing on GetAPro.org to manage your profile, respond to inquiries, and get more leads.',
+  openGraph: {
+    siteName: 'GetAPro.org',
+    type: 'website',
+    locale: 'en_CA',
+    title: 'Claim Your Listing — GetAPro.org',
+    description: 'Claim your free business listing on GetAPro.org to manage your profile, respond to inquiries, and get more leads.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Claim Your Listing — GetAPro.org',
+    description: 'Claim your free business listing on GetAPro.org to manage your profile, respond to inquiries, and get more leads.',
+  },
 };
 
 export default async function ClaimPage({ searchParams }) {
