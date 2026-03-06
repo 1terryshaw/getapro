@@ -34,18 +34,23 @@ function StarRating({ rating }) {
 
 export default function ListingCard({ listing }) {
   return (
-    <div className="bg-white rounded-lg border border-gray-100 hover:border-primary hover:shadow-md transition-all p-5">
-      <div className="flex justify-between items-start gap-3">
+    <div className="bg-white rounded-lg border border-gray-100 hover:border-primary hover:shadow-md transition-all p-4 sm:p-5">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3">
         <div className="flex-1 min-w-0">
-          <Link href={`/pro/${listing.slug}`} className="block group">
-            <h3 className="font-semibold text-dark text-lg group-hover:text-primary transition-colors truncate">
-              {listing.business_name}
-            </h3>
-          </Link>
+          <div className="flex items-start justify-between gap-2">
+            <Link href={`/pro/${listing.slug}`} className="block group flex-1 min-w-0">
+              <h3 className="font-semibold text-dark text-base sm:text-lg group-hover:text-primary transition-colors truncate">
+                {listing.business_name}
+              </h3>
+            </Link>
+            {listing.is_featured && (
+              <span className="bg-primary text-white text-xs px-2 py-0.5 rounded font-medium shrink-0 sm:hidden">Featured</span>
+            )}
+          </div>
           {listing.address && (
             <p className="text-sm text-accent mt-1 truncate">{listing.address}</p>
           )}
-          <div className="flex items-center gap-2 mt-2">
+          <div className="flex items-center gap-2 mt-2 flex-wrap">
             {listing.google_rating && (
               <>
                 <StarRating rating={listing.google_rating} />
@@ -62,13 +67,13 @@ export default function ListingCard({ listing }) {
             </p>
           )}
         </div>
-        <div className="flex flex-col items-end gap-2 shrink-0">
+        <div className="flex sm:flex-col items-center sm:items-end gap-2 shrink-0">
           {listing.is_featured && (
-            <span className="bg-primary text-white text-xs px-2 py-0.5 rounded font-medium">Featured</span>
+            <span className="bg-primary text-white text-xs px-2 py-0.5 rounded font-medium hidden sm:inline-block">Featured</span>
           )}
           <Link
             href={`/pro/${listing.slug}`}
-            className="bg-primary text-white px-4 py-2 rounded text-sm font-medium hover:bg-orange-600 transition-colors whitespace-nowrap"
+            className="bg-primary text-white px-4 py-2 rounded text-sm font-medium hover:bg-orange-600 transition-colors whitespace-nowrap w-full sm:w-auto text-center"
           >
             Get a Quote
           </Link>

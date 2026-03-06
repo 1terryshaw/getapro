@@ -130,7 +130,7 @@ export default async function TradeCityPage({ params, searchParams }) {
 
       {/* Sort controls */}
       <section className="max-w-6xl mx-auto px-4 pt-8">
-        <div className="flex items-center gap-2 text-sm">
+        <div className="flex items-center gap-2 text-sm flex-wrap">
           <span className="text-accent">Sort by:</span>
           {[
             { key: 'rating', label: 'Rating' },
