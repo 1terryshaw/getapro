@@ -43,7 +43,7 @@ export default async function TradePage({ params }) {
   const { data: listings, error: listingsError } = await getSupabase()
     .from('getapro_listings')
     .select('city, city_slug')
-    .eq('trade_category', tradeName);
+    .eq('trade_category', tradeSlug);
   if (listingsError) console.error('[TradePage] listings query error:', listingsError);
 
   const cityCountMap = {};
@@ -59,7 +59,7 @@ export default async function TradePage({ params }) {
   const { data: topListings, error: topListingsError } = await getSupabase()
     .from('getapro_listings')
     .select('*')
-    .eq('trade_category', tradeName)
+    .eq('trade_category', tradeSlug)
     .order('google_rating', { ascending: false })
     .order('google_review_count', { ascending: false })
     .limit(10);

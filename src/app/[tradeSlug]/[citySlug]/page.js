@@ -44,7 +44,7 @@ export async function generateMetadata({ params }) {
   const { count } = await getSupabase()
     .from('getapro_listings')
     .select('id', { count: 'exact', head: true })
-    .eq('trade_category', tradeName)
+    .eq('trade_category', tradeSlug)
     .eq('city_slug', citySlug);
 
   return generateTradeCity(tradeName, cityName, count);
@@ -61,7 +61,7 @@ export default async function TradeCityPage({ params, searchParams }) {
   let query = getSupabase()
     .from('getapro_listings')
     .select('*')
-    .eq('trade_category', tradeName)
+    .eq('trade_category', tradeSlug)
     .eq('city_slug', citySlug);
 
   if (sortParam === 'reviews') {
@@ -81,12 +81,12 @@ export default async function TradeCityPage({ params, searchParams }) {
     .from('getapro_listings')
     .select('trade_category')
     .eq('city_slug', citySlug)
-    .neq('trade_category', tradeName);
+    .neq('trade_category', tradeSlug);
   if (otherTradesError) console.error('[TradeCityPage] otherTrades query error:', otherTradesError);
 
   const otherTradeSet = new Set((otherTrades || []).map((l) => l.trade_category));
   const otherTradeLinks = Object.entries(TRADES_MAP)
-    .filter(([, name]) => otherTradeSet.has(name))
+    .filter(([slug]) => otherTradeSet.has(slug))
     .map(([slug, name]) => ({ slug, name }));
 
   const breadcrumbs = [
