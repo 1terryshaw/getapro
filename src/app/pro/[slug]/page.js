@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { supabase } from '@/lib/supabase';
 import { generateProfile } from '@/lib/seo';
 import { localBusinessSchema, breadcrumbSchema } from '@/lib/schema';

@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { supabase } from '@/lib/supabase';
 import { generateTrade } from '@/lib/seo';
 import { breadcrumbSchema } from '@/lib/schema';
