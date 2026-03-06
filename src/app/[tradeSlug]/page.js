@@ -1,4 +1,5 @@
 export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
 
 import { getSupabase } from '@/lib/supabase';
 import { generateTrade } from '@/lib/seo';
@@ -39,10 +40,11 @@ export default async function TradePage({ params }) {
   if (!tradeName) notFound();
 
   // Fetch cities with listing counts for this trade
-  const { data: listings } = await getSupabase()
+  const { data: listings, error: listingsError } = await getSupabase()
     .from('getapro_listings')
     .select('city, city_slug')
     .eq('trade_category', tradeName);
+  if (listingsError) console.error('[TradePage] listings query error:', listingsError);
 
   const cityCountMap = {};
   (listings || []).forEach((l) => {
@@ -54,13 +56,14 @@ export default async function TradePage({ params }) {
   const cities = Object.values(cityCountMap).sort((a, b) => b.count - a.count);
 
   // Fetch top-rated listings across Ontario
-  const { data: topListings } = await getSupabase()
+  const { data: topListings, error: topListingsError } = await getSupabase()
     .from('getapro_listings')
     .select('*')
     .eq('trade_category', tradeName)
     .order('google_rating', { ascending: false })
     .order('google_review_count', { ascending: false })
     .limit(10);
+  if (topListingsError) console.error('[TradePage] topListings query error:', topListingsError);
 
   const breadcrumbs = [
     { label: 'Home', href: '/' },

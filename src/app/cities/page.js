@@ -1,4 +1,5 @@
 export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
 
 import { getSupabase } from '@/lib/supabase';
 import { breadcrumbSchema } from '@/lib/schema';
@@ -12,9 +13,10 @@ export const metadata = {
 };
 
 export default async function CitiesPage() {
-  const { data: listings } = await getSupabase()
+  const { data: listings, error: listingsError } = await getSupabase()
     .from('getapro_listings')
     .select('city, city_slug');
+  if (listingsError) console.error('[CitiesPage] listings query error:', listingsError);
 
   const cityMap = {};
   (listings || []).forEach((l) => {
