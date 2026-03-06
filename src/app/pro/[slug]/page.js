@@ -1,4 +1,5 @@
 export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
 
 import { getSupabase } from '@/lib/supabase';
 import { generateProfile } from '@/lib/seo';
@@ -40,11 +41,12 @@ export async function generateMetadata({ params }) {
 
 export default async function ProProfilePage({ params }) {
   const { slug } = await params;
-  const { data: listing } = await getSupabase()
+  const { data: listing, error: listingError } = await getSupabase()
     .from('getapro_listings')
     .select('*')
     .eq('slug', slug)
     .single();
+  if (listingError) console.error('[ProProfilePage] listing query error:', listingError);
 
   if (!listing) notFound();
 

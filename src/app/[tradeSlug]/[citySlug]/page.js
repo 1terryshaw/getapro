@@ -1,4 +1,5 @@
 export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
 
 import { getSupabase } from '@/lib/supabase';
 import { generateTradeCity } from '@/lib/seo';
@@ -71,15 +72,17 @@ export default async function TradeCityPage({ params, searchParams }) {
     query = query.order('is_featured', { ascending: false }).order('google_rating', { ascending: false }).order('google_review_count', { ascending: false });
   }
 
-  const { data: listings } = await query;
+  const { data: listings, error: listingsError } = await query;
+  if (listingsError) console.error('[TradeCityPage] listings query error:', listingsError);
   const count = listings?.length || 0;
 
   // Cross-links: other trades in same city
-  const { data: otherTrades } = await getSupabase()
+  const { data: otherTrades, error: otherTradesError } = await getSupabase()
     .from('getapro_listings')
     .select('trade_category')
     .eq('city_slug', citySlug)
     .neq('trade_category', tradeName);
+  if (otherTradesError) console.error('[TradeCityPage] otherTrades query error:', otherTradesError);
 
   const otherTradeSet = new Set((otherTrades || []).map((l) => l.trade_category));
   const otherTradeLinks = Object.entries(TRADES_MAP)
