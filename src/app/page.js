@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import SearchBar from '@/components/SearchBar';
 import TradeGrid from '@/components/TradeGrid';
 import Link from 'next/link';
